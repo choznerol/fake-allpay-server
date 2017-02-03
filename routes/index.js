@@ -5,7 +5,13 @@ var router = require('express').Router(),
 
 var allpay = new Allpay('http://localhost:5051', '5294y06JbISpM5x9', 'v77hoKGq4kWxNNIS', '2000132');
 
-router.post('/AioCheckOut', function(req, res, next) {
+// TODO: remove this route
+router.post('/AioCheckOut', aioCheckOut); 
+router.post('/Cashier/AioCheckOut/V2', aioCheckOut); 
+
+module.exports = router;
+
+function aioCheckOut(req, res, next) {
     // TODO: check if the CheckMacValue in req.body is correct
     var form = {
         MerchantID: req.body.MerchantID,
@@ -33,6 +39,4 @@ router.post('/AioCheckOut', function(req, res, next) {
             // TODO: check if the merchant's server return 1|OK code
             res.redirect(req.body.OrderResultURL);
         });
-});
-
-module.exports = router;
+}
